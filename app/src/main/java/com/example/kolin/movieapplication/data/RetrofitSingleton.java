@@ -3,6 +3,7 @@ package com.example.kolin.movieapplication.data;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
@@ -26,6 +27,7 @@ public class RetrofitSingleton {
             retrofit = new Retrofit.Builder()
                     .baseUrl(URL)
                     .client(client)
+                    .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
         }

@@ -6,6 +6,7 @@ import com.example.kolin.movieapplication.data.Repository;
 
 import io.realm.RealmQuery;
 import retrofit2.Call;
+import rx.Observable;
 
 /**
  * Created by kolin on 07.06.2016.
@@ -19,12 +20,12 @@ public class InteractorImplement implements Interactor {
     }
 
     @Override
-    public Call<Films> showAllFilms() {
+    public Observable<Films> showAllFilms() {
         return repository.loadFilms();
     }
 
     @Override
-    public Call<Films> showAllDateFilms() {
+    public Observable<Films> showAllDateFilms() {
         return repository.loadDateFilms();
         //un useful commit
     }

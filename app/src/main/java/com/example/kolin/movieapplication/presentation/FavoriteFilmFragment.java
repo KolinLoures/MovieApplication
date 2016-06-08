@@ -45,7 +45,6 @@ public class FavoriteFilmFragment extends Fragment implements Contract.View {
     @Override
     public void onStop() {
         super.onStart();
-        presenter.removeListeners();
     }
 
     @Override

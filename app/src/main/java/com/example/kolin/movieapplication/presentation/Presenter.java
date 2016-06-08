@@ -16,6 +16,10 @@ import io.realm.RealmResults;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 
 public class Presenter implements Contract.PresenterInterface {
 
@@ -31,34 +35,28 @@ public class Presenter implements Contract.PresenterInterface {
 
     @Override
     public void showAllFilm() {
-        interactor.showAllFilms().enqueue(new Callback<Films>() {
-            @Override
-            public void onResponse(Call<Films> call, Response<Films> response) {
-                List<ResultFilm> list = new ArrayList<ResultFilm>(response.body().getResults());
-                view.showFilms(list);
-            }
-
-            @Override
-            public void onFailure(Call<Films> call, Throwable t) {
-
-            }
-        });
+        Observable<Films> observable = interactor.showAllFilms();
+        observable.subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<Films>() {
+                    @Override
+                    public void call(Films films) {
+                        view.showFilms(films.getResults());
+                    }
+                });
     }
 
     @Override
     public void showAllDateFilms() {
-        interactor.showAllDateFilms().enqueue(new Callback<Films>() {
-            @Override
-            public void onResponse(Call<Films> call, Response<Films> response) {
-                List<ResultFilm> list = new ArrayList<ResultFilm>(response.body().getResults());
-                view.showFilms(list);
-            }
-
-            @Override
-            public void onFailure(Call<Films> call, Throwable t) {
-
-            }
-        });
+        Observable<Films> observable = interactor.showAllDateFilms();
+        observable.subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<Films>() {
+                    @Override
+                    public void call(Films films) {
+                        view.showFilms(films.getResults());
+                    }
+                });
     }
 
     @Override
@@ -69,19 +67,18 @@ public class Presenter implements Contract.PresenterInterface {
     @Override
     public void getFavorite(Context context) {
         final RealmQuery<ResultFilm> query = interactor.getFavorite(context);
-        result = query.findAllAsync();
-        result.addChangeListener(new RealmChangeListener<RealmResults<ResultFilm>>() {
+        query.findAllAsync().asObservable()
+        .subscribe(new Action1<RealmResults<ResultFilm>>() {
             @Override
-            public void onChange(RealmResults<ResultFilm> element) {
-                if (element.isLoaded()) {
-                    List<ResultFilm> list = new ArrayList<>();
-                    for (ResultFilm r : element) {
+            public void call(RealmResults<ResultFilm> resultFilms) {
+                List<ResultFilm> list = new ArrayList<>();
+                    for (ResultFilm r : resultFilms) {
                         list.add(r);
                     }
                     view.showFilms(list);
-                }
             }
         });
+
     }
 
     @Override
