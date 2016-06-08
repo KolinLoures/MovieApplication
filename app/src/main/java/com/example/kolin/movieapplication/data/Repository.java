@@ -8,7 +8,6 @@ import com.example.kolin.movieapplication.domain.ResultFilm;
 
 import io.realm.Realm;
 import io.realm.RealmQuery;
-import retrofit2.Call;
 import rx.Observable;
 
 /**
@@ -20,23 +19,21 @@ public class Repository implements IRepository {
     private static final String SORT_BY_POPULARITY = "popularity.desc";
     private static final String SORT_BY_DATE = "release_date.desc";
     private static Realm realm;
-
+    private ApiInterface api;
 
 
 
     @Override
     public Observable<Films> loadFilms() {
-        RetrofitSingleton.getInstance();
-        ApiInterface api = RetrofitSingleton.getApi();
+        api = RetrofitSingleton.getApi();
         Observable<Films> call = api.getPopularFilms(SORT_BY_POPULARITY, API_KEY);
         return call;
     }
 
     @Override
     public Observable<Films> loadDateFilms() {
-        RetrofitSingleton.getInstance();
-        ApiInterface apiInterface = RetrofitSingleton.getApi();
-        Observable<Films> call = apiInterface.getPopularFilms(SORT_BY_DATE, API_KEY);
+        api = RetrofitSingleton.getApi();
+        Observable<Films> call = api.getPopularFilms(SORT_BY_DATE, API_KEY);
         return call;
     }
 

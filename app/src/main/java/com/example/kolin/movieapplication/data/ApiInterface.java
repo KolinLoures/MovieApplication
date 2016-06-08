@@ -2,7 +2,6 @@ package com.example.kolin.movieapplication.data;
 
 import com.example.kolin.movieapplication.domain.Films;
 
-import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 import rx.Observable;

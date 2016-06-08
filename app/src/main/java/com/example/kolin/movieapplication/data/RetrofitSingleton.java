@@ -1,14 +1,13 @@
 package com.example.kolin.movieapplication.data;
 
+
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-/**
- * Created by kolin on 07.06.2016.
- */
+
 public class RetrofitSingleton {
 
     private static final String URL = "http://api.themoviedb.org/";
@@ -36,6 +35,7 @@ public class RetrofitSingleton {
 
     private RetrofitSingleton(){
     }
+
 
     public static void initApi(){
         if (api == null){
