@@ -1,6 +1,5 @@
 package com.example.kolin.movieapplication.presentation;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -28,7 +27,9 @@ public class PopularFilmFragment extends Fragment implements Contract.View {
 
     private Contract.PresenterInterface presenter;
 
-    private SharedPreferences sharedPreferences;
+    @Inject
+    SharedPreferences sharedPreferences;
+
     private SharedPreferences.OnSharedPreferenceChangeListener listenerPreference;
 
 
@@ -40,10 +41,12 @@ public class PopularFilmFragment extends Fragment implements Contract.View {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        App.getComponent().inject(this);
+
         presenter = new Presenter(this);
         resultFilms = new ArrayList<>();
         adapter = new FilmAdapter(resultFilms, getContext(), presenter, this);
-        sharedPreferences = getContext().getSharedPreferences("SETTINGS", Context.MODE_PRIVATE);
+
         loadPreferences(sharedPreferences, "KEY");
         listenerPreference = new SharedPreferences.OnSharedPreferenceChangeListener() {
             @Override

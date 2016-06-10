@@ -14,14 +14,21 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.example.kolin.movieapplication.App;
 import com.example.kolin.movieapplication.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 public class MainActivity extends AppCompatActivity {
 
-    private SharedPreferences sharedPreferences;
+
+    @Inject
+    SharedPreferences sharedPreferences;
+
+
     private Adapter adapter;
     private ViewPager viewPager;
     private MenuItem itemPopularity, itemDate;
@@ -31,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        sharedPreferences = getSharedPreferences("SETTINGS", MODE_PRIVATE);
+        App.getComponent().inject(this);
         viewPager = (ViewPager) findViewById(R.id.viewP);
 
         setupAdapter();
