@@ -11,7 +11,6 @@ import dagger.Provides;
  */
 @Module
 public class PresentationMod {
-
     @Provides
     public SharedPreferences providesSharedPreferences(Context context){
         return context.getSharedPreferences("SETTING", context.MODE_PRIVATE);

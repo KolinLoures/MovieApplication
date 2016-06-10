@@ -21,6 +21,7 @@ import dagger.Component;
  * Created by n.kirilov on 10.06.2016.
  */
 
+
 @Singleton
 @Component(modules =
         {
