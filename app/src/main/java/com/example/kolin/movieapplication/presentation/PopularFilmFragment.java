@@ -40,7 +40,6 @@ public class PopularFilmFragment extends Fragment implements Contract.View {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        presenter = new Presenter(this);
         presenter = new Presenter(this);
         resultFilms = new ArrayList<>();
         adapter = new FilmAdapter(resultFilms, getContext(), presenter, this);

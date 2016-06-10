@@ -2,9 +2,6 @@ package com.example.kolin.movieapplication;
 
 import android.content.Context;
 
-import com.example.kolin.movieapplication.data.Repository;
-import com.example.kolin.movieapplication.domain.IRepository;
-
 import javax.inject.Singleton;
 
 import dagger.Module;
