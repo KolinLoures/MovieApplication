@@ -42,7 +42,6 @@ public class PopularFilmFragment extends Fragment implements Contract.View {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         App.getComponent().inject(this);
-
         presenter = new Presenter(this);
         resultFilms = new ArrayList<>();
         adapter = new FilmAdapter(resultFilms, getContext(), presenter, this);

@@ -8,8 +8,6 @@ import com.example.kolin.movieapplication.data.RetrofitSingleton;
 import com.example.kolin.movieapplication.data.dataModule.RepositoryModel;
 import com.example.kolin.movieapplication.domain.InteractorImplement;
 import com.example.kolin.movieapplication.domain.domainModule.InteractorModul;
-import com.example.kolin.movieapplication.presentation.Contract;
-import com.example.kolin.movieapplication.presentation.FavoriteFilmFragment;
 import com.example.kolin.movieapplication.presentation.MainActivity;
 import com.example.kolin.movieapplication.presentation.PopularFilmFragment;
 import com.example.kolin.movieapplication.presentation.Presenter;
@@ -46,4 +44,5 @@ public interface AppComponent {
     void inject(MainActivity a);
 
     void inject(PopularFilmFragment p);
+
 }
