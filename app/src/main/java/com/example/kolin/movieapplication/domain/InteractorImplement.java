@@ -2,7 +2,10 @@ package com.example.kolin.movieapplication.domain;
 
 import android.content.Context;
 
+import com.example.kolin.movieapplication.App;
 import com.example.kolin.movieapplication.data.Repository;
+
+import javax.inject.Inject;
 
 import io.realm.RealmQuery;
 import retrofit2.Call;
@@ -13,10 +16,11 @@ import rx.Observable;
  */
 public class InteractorImplement implements Interactor {
 
-    private IRepository repository;
+    @Inject
+    IRepository repository;
 
     public InteractorImplement() {
-        this.repository = new Repository();
+        App.getComponent().inject(this);
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.example.kolin.movieapplication.presentation;
 
 import android.content.Context;
 
+import com.example.kolin.movieapplication.App;
 import com.example.kolin.movieapplication.domain.Films;
 import com.example.kolin.movieapplication.domain.Interactor;
 import com.example.kolin.movieapplication.domain.InteractorImplement;
@@ -9,6 +10,8 @@ import com.example.kolin.movieapplication.domain.ResultFilm;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import io.realm.RealmChangeListener;
 import io.realm.RealmQuery;
@@ -23,13 +26,13 @@ import rx.schedulers.Schedulers;
 
 public class Presenter implements Contract.PresenterInterface {
 
-    private Interactor interactor;
-    private Contract.View view;
-    private RealmResults<ResultFilm> result;
+    @Inject
+    Interactor interactor;
 
+    private Contract.View view;
 
     public Presenter(Contract.View view) {
-        this.interactor = new InteractorImplement();
+        App.getComponent().inject(this);
         this.view = view;
     }
 
@@ -81,10 +84,6 @@ public class Presenter implements Contract.PresenterInterface {
 
     }
 
-    @Override
-    public void removeListeners() {
-        result.removeChangeListeners();
-    }
 
     @Override
     public void removeFavoriteFilm(Context context, ResultFilm resultFilm) {

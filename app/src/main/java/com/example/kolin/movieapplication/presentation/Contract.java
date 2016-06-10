@@ -24,7 +24,6 @@ public interface Contract {
 
         void getFavorite(Context context);
 
-        void removeListeners();
 
         void removeFavoriteFilm(Context context, ResultFilm resultFilm);
     }

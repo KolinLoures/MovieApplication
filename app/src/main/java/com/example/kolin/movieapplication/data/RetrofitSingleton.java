@@ -1,13 +1,17 @@
 package com.example.kolin.movieapplication.data;
 
 
+import javax.inject.Singleton;
+
+import dagger.Module;
+import dagger.Provides;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-
+@Module
 public class RetrofitSingleton {
 
     private static final String URL = "http://api.themoviedb.org/";
@@ -15,7 +19,8 @@ public class RetrofitSingleton {
     private static Retrofit retrofit = null;
     private static OkHttpClient client;
 
-
+    @Singleton
+    @Provides
     public static Retrofit getInstance(){
         if (retrofit == null){
             HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
@@ -33,6 +38,7 @@ public class RetrofitSingleton {
         return retrofit;
     }
 
+    @Singleton
     private RetrofitSingleton(){
     }
 
@@ -45,6 +51,9 @@ public class RetrofitSingleton {
         }
     }
 
+
+    @Singleton
+    @Provides
     public static ApiInterface getApi(){
         initApi();
         return api;

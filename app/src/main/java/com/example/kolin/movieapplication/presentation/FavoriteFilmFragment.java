@@ -8,17 +8,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.kolin.movieapplication.App;
 import com.example.kolin.movieapplication.R;
 import com.example.kolin.movieapplication.domain.ResultFilm;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 public class FavoriteFilmFragment extends Fragment implements Contract.View {
 
 
     private List<ResultFilm> listFavorite;
     private FilmAdapter adapter;
+
     private Contract.PresenterInterface presenter;
 
     public FavoriteFilmFragment() {
@@ -30,7 +34,6 @@ public class FavoriteFilmFragment extends Fragment implements Contract.View {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         presenter = new Presenter(this);
         listFavorite = new ArrayList<>();
         adapter = new FilmAdapter(listFavorite, getActivity(), presenter, this);

@@ -10,17 +10,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.kolin.movieapplication.App;
 import com.example.kolin.movieapplication.R;
 import com.example.kolin.movieapplication.domain.ResultFilm;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 
 public class PopularFilmFragment extends Fragment implements Contract.View {
 
     private List<ResultFilm> resultFilms;
+
     private FilmAdapter adapter;
+
     private Contract.PresenterInterface presenter;
 
     private SharedPreferences sharedPreferences;
@@ -35,6 +40,7 @@ public class PopularFilmFragment extends Fragment implements Contract.View {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//        presenter = new Presenter(this);
         presenter = new Presenter(this);
         resultFilms = new ArrayList<>();
         adapter = new FilmAdapter(resultFilms, getContext(), presenter, this);
