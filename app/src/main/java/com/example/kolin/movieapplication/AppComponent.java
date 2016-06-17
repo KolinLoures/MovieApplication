@@ -9,6 +9,7 @@ import com.example.kolin.movieapplication.data.dataModule.RepositoryModel;
 import com.example.kolin.movieapplication.domain.InteractorImplement;
 import com.example.kolin.movieapplication.domain.domainModule.InteractorModul;
 import com.example.kolin.movieapplication.presentation.MainActivity;
+import com.example.kolin.movieapplication.presentation.favoriteFilms.FavoriteFilmFragment;
 import com.example.kolin.movieapplication.presentation.favoriteFilms.PresenterFavoriteFilm;
 import com.example.kolin.movieapplication.presentation.films.PopularFilmFragment;
 import com.example.kolin.movieapplication.presentation.films.Presenter;
@@ -48,4 +49,6 @@ public interface AppComponent {
     void inject(PopularFilmFragment popularFilmFragment);
 
     void inject(PresenterFavoriteFilm presenterFavoriteFilm);
+
+    void inject(FavoriteFilmFragment favoriteFilmFragment);
 }

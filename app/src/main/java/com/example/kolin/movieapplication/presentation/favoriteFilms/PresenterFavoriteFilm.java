@@ -4,7 +4,6 @@ import android.content.Context;
 
 import com.example.kolin.movieapplication.App;
 import com.example.kolin.movieapplication.domain.Interactor;
-import com.example.kolin.movieapplication.domain.InteractorImplement;
 import com.example.kolin.movieapplication.domain.ResultFilm;
 import com.example.kolin.movieapplication.presentation.Contract;
 

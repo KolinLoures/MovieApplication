@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.kolin.movieapplication.App;
 import com.example.kolin.movieapplication.R;
 import com.example.kolin.movieapplication.domain.ResultFilm;
 import com.example.kolin.movieapplication.presentation.Contract;
@@ -15,13 +16,16 @@ import com.example.kolin.movieapplication.presentation.Contract;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 public class FavoriteFilmFragment extends Fragment implements Contract.ViewFavorite {
 
 
     private List<ResultFilm> listFavorite;
     private FilmFavoriteAdapter adapter;
 
-    private Contract.PresenterFavoriteInterface presenter;
+    @Inject
+    Contract.PresenterFavoriteInterface presenter;
 
     public FavoriteFilmFragment() {
         // Required empty public constructor
@@ -32,7 +36,7 @@ public class FavoriteFilmFragment extends Fragment implements Contract.ViewFavor
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        presenter = new PresenterFavoriteFilm(this);
+        App.getComponent().inject(this);
         listFavorite = new ArrayList<>();
         adapter = new FilmFavoriteAdapter(listFavorite, getContext(), presenter);
     }
@@ -53,7 +57,6 @@ public class FavoriteFilmFragment extends Fragment implements Contract.ViewFavor
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_favorite_film, container, false);
-
         RecyclerView recyclerView = (RecyclerView) v.findViewById(R.id.rvFavorite);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         recyclerView.setAdapter(adapter);
