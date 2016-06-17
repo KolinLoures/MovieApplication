@@ -9,8 +9,9 @@ import com.example.kolin.movieapplication.data.dataModule.RepositoryModel;
 import com.example.kolin.movieapplication.domain.InteractorImplement;
 import com.example.kolin.movieapplication.domain.domainModule.InteractorModul;
 import com.example.kolin.movieapplication.presentation.MainActivity;
-import com.example.kolin.movieapplication.presentation.PopularFilmFragment;
-import com.example.kolin.movieapplication.presentation.Presenter;
+import com.example.kolin.movieapplication.presentation.favoriteFilms.PresenterFavoriteFilm;
+import com.example.kolin.movieapplication.presentation.films.PopularFilmFragment;
+import com.example.kolin.movieapplication.presentation.films.Presenter;
 import com.example.kolin.movieapplication.presentation.presentationModule.PresentationMod;
 
 import javax.inject.Singleton;
@@ -40,10 +41,11 @@ public interface AppComponent {
 
     void inject(InteractorImplement interactorImplement);
 
+    void inject(MainActivity mainActivity);
+
     void inject(Presenter presenter);
 
-    void inject(MainActivity a);
+    void inject(PopularFilmFragment popularFilmFragment);
 
-    void inject(PopularFilmFragment p);
-
+    void inject(PresenterFavoriteFilm presenterFavoriteFilm);
 }

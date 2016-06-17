@@ -16,6 +16,8 @@ import android.view.MenuItem;
 
 import com.example.kolin.movieapplication.App;
 import com.example.kolin.movieapplication.R;
+import com.example.kolin.movieapplication.presentation.favoriteFilms.FavoriteFilmFragment;
+import com.example.kolin.movieapplication.presentation.films.PopularFilmFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -87,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void savePreferences(int id){
-        sharedPreferences = getSharedPreferences("SETTINGS", MODE_PRIVATE);
+       // sharedPreferences = getSharedPreferences("SETTINGS", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.remove("KEY");
         editor.putInt("KEY", id);

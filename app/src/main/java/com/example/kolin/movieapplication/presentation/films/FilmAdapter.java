@@ -1,9 +1,8 @@
-package com.example.kolin.movieapplication.presentation;
+package com.example.kolin.movieapplication.presentation.films;
 
 import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +13,8 @@ import android.widget.TextView;
 
 import com.example.kolin.movieapplication.R;
 import com.example.kolin.movieapplication.domain.ResultFilm;
+import com.example.kolin.movieapplication.presentation.Contract;
+import com.example.kolin.movieapplication.presentation.DetailActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -25,13 +26,11 @@ public class FilmAdapter extends RecyclerView.Adapter<FilmAdapter.ViewHolder>  {
     private List<ResultFilm> list;
     private Context context;
     private Contract.PresenterInterface presenter;
-    private Fragment fragment;
 
-    public FilmAdapter(List<ResultFilm> list, Context context, Contract.PresenterInterface presenter, Fragment fragment) {
+    public FilmAdapter(List<ResultFilm> list, Context context, Contract.PresenterInterface presenter) {
         this.list = list;
         this.context = context;
         this.presenter = presenter;
-        this.fragment = fragment;
     }
 
 
@@ -45,9 +44,6 @@ public class FilmAdapter extends RecyclerView.Adapter<FilmAdapter.ViewHolder>  {
     @Override
     public void onBindViewHolder(FilmAdapter.ViewHolder holder, int position) {
         ResultFilm resultFilm = list.get(position);
-        if (fragment instanceof FavoriteFilmFragment){
-            holder.favoriteBtn.setImageResource(R.drawable.ic_clear_black_24dp);
-        }
         holder.textNameFilm.setText(resultFilm.getTitle());
         Picasso.with(context)
                 .load(resultFilm.getUrlPoster())
@@ -101,13 +97,8 @@ public class FilmAdapter extends RecyclerView.Adapter<FilmAdapter.ViewHolder>  {
                     startDetailActivity(v.getContext());
                     break;
                 case R.id.favorite_button:
-                    if (fragment instanceof FavoriteFilmFragment) {
-                        Snackbar.make(v, "Delete from favorite!", Snackbar.LENGTH_LONG).show();
-                        presenter.removeFavoriteFilm(v.getContext(), list.get(getAdapterPosition()));
-                    } else {
                         Snackbar.make(v, "Added to favorite!", Snackbar.LENGTH_LONG).show();
                         presenter.addToFavorite(list.get(getAdapterPosition()), v.getContext());
-                    }
                     break;
             }
         }

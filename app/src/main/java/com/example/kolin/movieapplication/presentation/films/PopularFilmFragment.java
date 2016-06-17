@@ -1,4 +1,4 @@
-package com.example.kolin.movieapplication.presentation;
+package com.example.kolin.movieapplication.presentation.films;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import com.example.kolin.movieapplication.App;
 import com.example.kolin.movieapplication.R;
 import com.example.kolin.movieapplication.domain.ResultFilm;
+import com.example.kolin.movieapplication.presentation.Contract;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,9 +24,9 @@ public class PopularFilmFragment extends Fragment implements Contract.View {
 
     private List<ResultFilm> resultFilms;
 
-    private FilmAdapter adapter;
-
     private Contract.PresenterInterface presenter;
+
+    private FilmAdapter adapter;
 
     @Inject
     SharedPreferences sharedPreferences;
@@ -44,8 +45,7 @@ public class PopularFilmFragment extends Fragment implements Contract.View {
         App.getComponent().inject(this);
         presenter = new Presenter(this);
         resultFilms = new ArrayList<>();
-        adapter = new FilmAdapter(resultFilms, getContext(), presenter, this);
-
+        adapter = new FilmAdapter(resultFilms, getContext(), presenter);
         loadPreferences(sharedPreferences, "KEY");
         listenerPreference = new SharedPreferences.OnSharedPreferenceChangeListener() {
             @Override

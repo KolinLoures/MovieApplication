@@ -1,4 +1,4 @@
-package com.example.kolin.movieapplication.presentation;
+package com.example.kolin.movieapplication.presentation.favoriteFilms;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,22 +8,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.kolin.movieapplication.App;
 import com.example.kolin.movieapplication.R;
 import com.example.kolin.movieapplication.domain.ResultFilm;
+import com.example.kolin.movieapplication.presentation.Contract;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
-
-public class FavoriteFilmFragment extends Fragment implements Contract.View {
+public class FavoriteFilmFragment extends Fragment implements Contract.ViewFavorite {
 
 
     private List<ResultFilm> listFavorite;
-    private FilmAdapter adapter;
+    private FilmFavoriteAdapter adapter;
 
-    private Contract.PresenterInterface presenter;
+    private Contract.PresenterFavoriteInterface presenter;
 
     public FavoriteFilmFragment() {
         // Required empty public constructor
@@ -34,9 +32,9 @@ public class FavoriteFilmFragment extends Fragment implements Contract.View {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        presenter = new Presenter(this);
+        presenter = new PresenterFavoriteFilm(this);
         listFavorite = new ArrayList<>();
-        adapter = new FilmAdapter(listFavorite, getActivity(), presenter, this);
+        adapter = new FilmFavoriteAdapter(listFavorite, getContext(), presenter);
     }
 
     @Override
@@ -63,7 +61,7 @@ public class FavoriteFilmFragment extends Fragment implements Contract.View {
     }
 
     @Override
-    public void showFilms(List<ResultFilm> list) {
+    public void showFavoriteFilms(List<ResultFilm> list) {
         adapter.clear();
         adapter.addAll(list);
     }
