@@ -32,6 +32,7 @@ public class Presenter implements Contract.PresenterInterface {
     Interactor interactor;
     private Contract.View view;
 
+    @Inject
     public Presenter(Contract.View view) {
         App.getComponent().inject(this);
         this.view = view;

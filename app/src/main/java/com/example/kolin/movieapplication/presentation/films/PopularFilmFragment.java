@@ -26,7 +26,6 @@ public class PopularFilmFragment extends Fragment implements Contract.View {
     private FilmAdapter adapter;
 
     private SharedPreferences.OnSharedPreferenceChangeListener listenerPreference;
-
     private Contract.PresenterInterface presenter;
     @Inject
     SharedPreferences sharedPreferences;
