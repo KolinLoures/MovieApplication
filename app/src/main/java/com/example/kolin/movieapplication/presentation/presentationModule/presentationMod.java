@@ -3,6 +3,7 @@ package com.example.kolin.movieapplication.presentation.presentationModule;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.example.kolin.movieapplication.data.Repository;
 import com.example.kolin.movieapplication.domain.ResultFilm;
 import com.example.kolin.movieapplication.presentation.Contract;
 import com.example.kolin.movieapplication.presentation.films.FilmAdapter;
@@ -26,5 +27,6 @@ public class PresentationMod {
     public SharedPreferences providesSharedPreferences(Context context){
         return context.getSharedPreferences("SETTING", context.MODE_PRIVATE);
     }
+
 
 }
