@@ -26,13 +26,17 @@ public class PopularFilmFragment extends Fragment implements Contract.View {
     private FilmAdapter adapter;
 
     private SharedPreferences.OnSharedPreferenceChangeListener listenerPreference;
-    private Contract.PresenterInterface presenter;
+
+    @Inject
+    Contract.PresenterInterface presenter;
     @Inject
     SharedPreferences sharedPreferences;
 
 
     public PopularFilmFragment() {
         // Required empty public constructor
+        int i=0;
+        i++;
     }
 
 
@@ -40,7 +44,7 @@ public class PopularFilmFragment extends Fragment implements Contract.View {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         App.getComponent().inject(this);
-        presenter = new Presenter(this);
+//        presenter = new Presenter(this);
         resultFilms = new ArrayList<>();
         adapter = new FilmAdapter(resultFilms, getContext(), presenter);
         loadPreferences(sharedPreferences, "KEY");

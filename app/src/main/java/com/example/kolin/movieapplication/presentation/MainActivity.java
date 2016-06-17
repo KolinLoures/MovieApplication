@@ -29,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Inject
     SharedPreferences sharedPreferences;
+    @Inject
+    PopularFilmFragment popularFilmFragment;
 
 
     private Adapter adapter;
@@ -55,6 +57,8 @@ public class MainActivity extends AppCompatActivity {
 
         TabLayout tabs = (TabLayout) findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
+
+        popularFilmFragment = new PopularFilmFragment();
     }
 
     @Override
@@ -97,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void setupAdapter(){
         adapter = new Adapter(getSupportFragmentManager());
-        adapter.addFragment(new PopularFilmFragment(), "Films");
+        adapter.addFragment(popularFilmFragment, "Films");
         adapter.addFragment(new FavoriteFilmFragment(), "Favorite");
         viewPager.setAdapter(adapter);
     }
