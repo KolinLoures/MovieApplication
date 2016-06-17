@@ -14,6 +14,7 @@ import java.util.List;
 
 import dagger.Module;
 import dagger.Provides;
+import retrofit2.http.POST;
 
 /**
  * Created by n.kirilov on 10.06.2016.

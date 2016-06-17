@@ -23,15 +23,13 @@ import javax.inject.Inject;
 public class PopularFilmFragment extends Fragment implements Contract.View {
 
     private List<ResultFilm> resultFilms;
-
-    private Contract.PresenterInterface presenter;
-
     private FilmAdapter adapter;
 
+    private SharedPreferences.OnSharedPreferenceChangeListener listenerPreference;
+
+    private Contract.PresenterInterface presenter;
     @Inject
     SharedPreferences sharedPreferences;
-
-    private SharedPreferences.OnSharedPreferenceChangeListener listenerPreference;
 
 
     public PopularFilmFragment() {
