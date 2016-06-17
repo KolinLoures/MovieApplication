@@ -89,7 +89,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void savePreferences(int id){
-       // sharedPreferences = getSharedPreferences("SETTINGS", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.remove("KEY");
         editor.putInt("KEY", id);
