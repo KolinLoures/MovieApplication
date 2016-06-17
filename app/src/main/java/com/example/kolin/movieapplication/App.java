@@ -5,9 +5,7 @@ import android.app.Application;
 import com.example.kolin.movieapplication.data.RealmSingleton;
 import com.example.kolin.movieapplication.data.RetrofitSingleton;
 
-/**
- * Created by n.kirilov on 10.06.2016.
- */
+
 public class App extends Application {
 
     private static AppComponent component;

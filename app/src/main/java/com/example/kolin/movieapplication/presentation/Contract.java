@@ -27,6 +27,7 @@ public interface Contract {
         void showAllDateFilms();
 
         void addToFavorite(ResultFilm resultFilm, Context context);
+
     }
 
     interface PresenterFavoriteInterface{

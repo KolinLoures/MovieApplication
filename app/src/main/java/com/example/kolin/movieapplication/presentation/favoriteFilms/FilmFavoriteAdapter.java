@@ -67,6 +67,7 @@ public class FilmFavoriteAdapter extends RecyclerView.Adapter<FilmFavoriteAdapte
     public void clear() {
         list.clear();
         notifyDataSetChanged();
+
     }
 
 

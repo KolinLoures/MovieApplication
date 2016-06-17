@@ -51,4 +51,5 @@ public interface AppComponent {
     void inject(PresenterFavoriteFilm presenterFavoriteFilm);
 
     void inject(FavoriteFilmFragment favoriteFilmFragment);
+
 }

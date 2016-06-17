@@ -19,9 +19,6 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-/**
- * Created by kolin on 07.06.2016.
- */
 public class FilmAdapter extends RecyclerView.Adapter<FilmAdapter.ViewHolder>  {
     private List<ResultFilm> list;
     private Context context;

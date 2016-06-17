@@ -38,6 +38,7 @@ public class FavoriteFilmFragment extends Fragment implements Contract.ViewFavor
         super.onCreate(savedInstanceState);
         App.getComponent().inject(this);
         listFavorite = new ArrayList<>();
+
         adapter = new FilmFavoriteAdapter(listFavorite, getContext(), presenter);
     }
 

@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
         App.getComponent().inject(this);
 
+
         viewPager = (ViewPager) findViewById(R.id.viewP);
 
         setupAdapter();

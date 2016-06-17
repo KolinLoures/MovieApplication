@@ -43,6 +43,7 @@ public class PresenterFavoriteFilm implements Contract.PresenterFavoriteInterfac
                             list.add(r);
                         }
                         view.showFavoriteFilms(list);
+
                     }
                 });
     }

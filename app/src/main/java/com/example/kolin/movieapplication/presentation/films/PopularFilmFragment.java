@@ -42,6 +42,7 @@ public class PopularFilmFragment extends Fragment implements Contract.View {
         super.onCreate(savedInstanceState);
         App.getComponent().inject(this);
         resultFilms = new ArrayList<>();
+        
         adapter = new FilmAdapter(resultFilms, getContext(), presenter);
         loadPreferences(sharedPreferences, "KEY");
         listenerPreference = new SharedPreferences.OnSharedPreferenceChangeListener() {

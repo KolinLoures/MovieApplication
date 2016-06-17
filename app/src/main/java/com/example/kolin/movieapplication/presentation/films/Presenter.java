@@ -30,7 +30,6 @@ public class Presenter implements Contract.PresenterInterface {
 
     @Inject
     Interactor interactor;
-
     private Contract.View view;
 
 

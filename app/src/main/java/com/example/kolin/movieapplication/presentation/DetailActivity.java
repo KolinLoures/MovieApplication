@@ -33,6 +33,7 @@ public class DetailActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         resultFilm = bundle.getParcelable("film");
 
+
         Picasso.with(getApplicationContext()).load(resultFilm.getUrlPoster())
                 .placeholder(R.drawable.ic_account_circle_black_24dp)
                 .into(filmImage);
