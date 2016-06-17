@@ -51,5 +51,4 @@ public class PresentationMod {
     public Contract.PresenterFavoriteInterface providesPresenterFavorite(FavoriteFilmFragment f){
         return new PresenterFavoriteFilm(f);
     }
-
 }
