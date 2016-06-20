@@ -28,6 +28,7 @@ import retrofit2.http.POST;
 public class PresentationMod {
 
     @Provides
+    @Singleton
     public SharedPreferences providesSharedPreferences(Context context){
         return context.getSharedPreferences("SETTING", context.MODE_PRIVATE);
     }
@@ -45,11 +46,13 @@ public class PresentationMod {
     }
 
     @Provides
+    @Singleton
     public Contract.PresenterInterface providesPresenter(){
         return new Presenter();
     }
 
     @Provides
+    @Singleton
     public Contract.PresenterFavoriteInterface providesPresenterFavorite(){
         return new PresenterFavoriteFilm();
     }
