@@ -48,7 +48,6 @@ public class FilmFavoriteAdapter extends RecyclerView.Adapter<FilmFavoriteAdapte
         Picasso.with(context)
                 .load(resultFilm.getUrlPoster())
                 .placeholder(R.drawable.ic_account_circle_black_24dp)
-                .centerCrop()
                 .fit()
                 .into(holder.imageView);
     }

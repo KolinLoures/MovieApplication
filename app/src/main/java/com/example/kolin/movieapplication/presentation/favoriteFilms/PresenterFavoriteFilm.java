@@ -26,9 +26,8 @@ public class PresenterFavoriteFilm implements Contract.PresenterFavoriteInterfac
 
     private Contract.ViewFavorite view;
 
-    public PresenterFavoriteFilm(Contract.ViewFavorite view) {
+    public PresenterFavoriteFilm() {
         App.getComponent().inject(this);
-        this.view = view;
     }
 
     @Override
@@ -52,4 +51,11 @@ public class PresenterFavoriteFilm implements Contract.PresenterFavoriteInterfac
     public void removeFavoriteFilm(Context context, ResultFilm resultFilm) {
         interactor.deleteFavoriteFromRepositoriy(context, resultFilm);
     }
+
+    @Override
+    public void setFavoriteView(Contract.ViewFavorite view) {
+        this.view = view;
+    }
+
+
 }

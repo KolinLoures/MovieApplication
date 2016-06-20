@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,9 +41,12 @@ public class PopularFilmFragment extends Fragment implements Contract.View {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         App.getComponent().inject(this);
+
+        presenter.setView(this);
+
         resultFilms = new ArrayList<>();
-        
         adapter = new FilmAdapter(resultFilms, getContext(), presenter);
         loadPreferences(sharedPreferences, "KEY");
         listenerPreference = new SharedPreferences.OnSharedPreferenceChangeListener() {
@@ -51,7 +55,6 @@ public class PopularFilmFragment extends Fragment implements Contract.View {
                 loadPreferences(sharedPreferences, key);
             }
         };
-
     }
 
     @Override
@@ -90,7 +93,12 @@ public class PopularFilmFragment extends Fragment implements Contract.View {
             int selectedMenuItem = sp.getInt(key, 0);
             if (selectedMenuItem == R.id.popular_item) {
                 presenter.showAllFilm();
-            } else presenter.showAllDateFilms();
+                Log.i("MyLog", "Показывает фильмы популярные");
+            } else
+            {
+                presenter.showAllDateFilms();
+                Log.i("MyLog", "Показывает фильмы по дате релиза");
+            }
         }
     }
 }

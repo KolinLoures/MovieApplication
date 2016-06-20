@@ -24,6 +24,7 @@ public class FavoriteFilmFragment extends Fragment implements Contract.ViewFavor
     private List<ResultFilm> listFavorite;
     private FilmFavoriteAdapter adapter;
 
+
     @Inject
     Contract.PresenterFavoriteInterface presenter;
 
@@ -36,9 +37,12 @@ public class FavoriteFilmFragment extends Fragment implements Contract.ViewFavor
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        App.getComponent().inject(this);
-        listFavorite = new ArrayList<>();
 
+        App.getComponent().inject(this);
+
+        presenter.setFavoriteView(this);
+
+        listFavorite = new ArrayList<>();
         adapter = new FilmFavoriteAdapter(listFavorite, getContext(), presenter);
     }
 

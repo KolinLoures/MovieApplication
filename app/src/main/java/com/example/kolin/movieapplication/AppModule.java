@@ -22,6 +22,6 @@ public class AppModule {
     @Provides
     @Singleton
     Context providesContext() {
-        return context;
+        return context.getApplicationContext();
     }
 }

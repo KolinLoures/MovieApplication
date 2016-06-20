@@ -32,23 +32,26 @@ public class PresentationMod {
         return context.getSharedPreferences("SETTING", context.MODE_PRIVATE);
     }
 
-    @Provides @Singleton
+    @Provides
+    @Singleton
     public PopularFilmFragment providesPopularFilmFragment(){
         return new PopularFilmFragment();
     }
 
-    @Provides @Singleton
+    @Provides
+    @Singleton
     public FavoriteFilmFragment providesFavoriteFragment(){
         return new FavoriteFilmFragment();
     }
 
     @Provides
-    public Contract.PresenterInterface providesPresenter(PopularFilmFragment p){
-        return new Presenter(p);
+    public Contract.PresenterInterface providesPresenter(){
+        return new Presenter();
     }
 
     @Provides
-    public Contract.PresenterFavoriteInterface providesPresenterFavorite(FavoriteFilmFragment f){
-        return new PresenterFavoriteFilm(f);
+    public Contract.PresenterFavoriteInterface providesPresenterFavorite(){
+        return new PresenterFavoriteFilm();
     }
+
 }

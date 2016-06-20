@@ -9,6 +9,7 @@ import com.example.kolin.movieapplication.domain.InteractorImplement;
 import com.example.kolin.movieapplication.domain.ResultFilm;
 import com.example.kolin.movieapplication.presentation.Contract;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,12 +31,12 @@ public class Presenter implements Contract.PresenterInterface {
 
     @Inject
     Interactor interactor;
+
     private Contract.View view;
 
 
-    public Presenter(Contract.View view) {
+    public Presenter() {
         App.getComponent().inject(this);
-        this.view = view;
     }
 
     @Override
@@ -68,5 +69,11 @@ public class Presenter implements Contract.PresenterInterface {
     public void addToFavorite(ResultFilm resultFilm, Context context) {
         interactor.addToDataBase(resultFilm, context);
     }
+
+    @Override
+    public void setView (Contract.View view){
+        this.view = view;
+    }
+
 
 }

@@ -28,6 +28,8 @@ public interface Contract {
 
         void addToFavorite(ResultFilm resultFilm, Context context);
 
+        void setView(Contract.View view);
+
     }
 
     interface PresenterFavoriteInterface{
@@ -35,5 +37,7 @@ public interface Contract {
         void getFavorite(Context context);
 
         void removeFavoriteFilm(Context context, ResultFilm resultFilm);
+
+        void setFavoriteView(Contract.ViewFavorite view);
     }
 }
