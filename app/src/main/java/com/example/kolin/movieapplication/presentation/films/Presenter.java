@@ -32,7 +32,8 @@ public class Presenter implements Contract.PresenterInterface {
     @Inject
     Interactor interactor;
 
-    private Contract.View view;
+
+    private WeakReference<Contract.View> viewWeakReference;
 
 
     public Presenter() {
@@ -41,28 +42,32 @@ public class Presenter implements Contract.PresenterInterface {
 
     @Override
     public void showAllFilm() {
-        Observable<Films> observable = interactor.showAllFilms();
-        observable.subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<Films>() {
-                    @Override
-                    public void call(Films films) {
-                        view.showFilms(films.getResults());
-                    }
-                });
+        if (isViewAttached()) {
+            Observable<Films> observable = interactor.showAllFilms();
+            observable.subscribeOn(Schedulers.newThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Action1<Films>() {
+                        @Override
+                        public void call(Films films) {
+                            getView().showFilms(films.getResults());
+                        }
+                    });
+        }
     }
 
     @Override
     public void showAllDateFilms() {
-        Observable<Films> observable = interactor.showAllDateFilms();
-        observable.subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<Films>() {
-                    @Override
-                    public void call(Films films) {
-                        view.showFilms(films.getResults());
-                    }
-                });
+        if (isViewAttached()) {
+            Observable<Films> observable = interactor.showAllDateFilms();
+            observable.subscribeOn(Schedulers.newThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Action1<Films>() {
+                        @Override
+                        public void call(Films films) {
+                            getView().showFilms(films.getResults());
+                        }
+                    });
+        }
     }
 
     @Override
@@ -70,9 +75,28 @@ public class Presenter implements Contract.PresenterInterface {
         interactor.addToDataBase(resultFilm, context);
     }
 
+
     @Override
-    public void setView (Contract.View view){
-        this.view = view;
+    public void attachView(Contract.View view) {
+        this.viewWeakReference = new WeakReference<Contract.View>(view);
+    }
+
+    @Override
+    public void detachView() {
+        if (viewWeakReference != null){
+            viewWeakReference.clear();
+            viewWeakReference = null;
+        }
+    }
+
+    @Override
+    public boolean isViewAttached() {
+        return viewWeakReference != null && viewWeakReference.get() != null;
+    }
+
+    @Override
+    public Contract.View getView() {
+        return viewWeakReference == null ? null : viewWeakReference.get();
     }
 
 

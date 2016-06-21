@@ -28,7 +28,13 @@ public interface Contract {
 
         void addToFavorite(ResultFilm resultFilm, Context context);
 
-        void setView(Contract.View view);
+        void attachView(Contract.View view);
+
+        void detachView();
+
+        boolean isViewAttached();
+
+        Contract.View getView();
 
     }
 
@@ -38,6 +44,13 @@ public interface Contract {
 
         void removeFavoriteFilm(Context context, ResultFilm resultFilm);
 
-        void setFavoriteView(Contract.ViewFavorite view);
+        void attachView(Contract.ViewFavorite view);
+
+        void detachView();
+
+        boolean isViewAttached();
+
+        Contract.ViewFavorite getView();
+
     }
 }

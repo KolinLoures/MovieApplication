@@ -44,7 +44,7 @@ public class PopularFilmFragment extends Fragment implements Contract.View {
 
         App.getComponent().inject(this);
 
-        presenter.setView(this);
+        presenter.attachView(this);
 
         resultFilms = new ArrayList<>();
         adapter = new FilmAdapter(resultFilms, getContext(), presenter);
@@ -100,5 +100,11 @@ public class PopularFilmFragment extends Fragment implements Contract.View {
                 Log.i("MyLog", "Показывает фильмы по дате релиза");
             }
         }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        presenter.detachView();
     }
 }

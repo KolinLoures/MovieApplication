@@ -40,7 +40,7 @@ public class FavoriteFilmFragment extends Fragment implements Contract.ViewFavor
 
         App.getComponent().inject(this);
 
-        presenter.setFavoriteView(this);
+        presenter.attachView(this);
 
         listFavorite = new ArrayList<>();
         adapter = new FilmFavoriteAdapter(listFavorite, getContext(), presenter);
@@ -55,6 +55,7 @@ public class FavoriteFilmFragment extends Fragment implements Contract.ViewFavor
     @Override
     public void onStop() {
         super.onStart();
+        presenter.detachView();
     }
 
     @Override
