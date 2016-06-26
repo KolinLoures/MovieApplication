@@ -2,6 +2,8 @@ package com.example.kolin.movieapplication.presentation.films;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -19,17 +21,35 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class FilmAdapter extends RecyclerView.Adapter<FilmAdapter.ViewHolder>  {
+public class FilmAdapter extends RecyclerView.Adapter<FilmAdapter.ViewHolder> implements Parcelable {
     private List<ResultFilm> list;
     private Context context;
     private Contract.PresenterInterface presenter;
+    private Picasso picasso;
 
     public FilmAdapter(List<ResultFilm> list, Context context, Contract.PresenterInterface presenter) {
+        picasso = Picasso.with(context);
         this.list = list;
         this.context = context;
         this.presenter = presenter;
     }
 
+
+    protected FilmAdapter(Parcel in) {
+        list = in.createTypedArrayList(ResultFilm.CREATOR);
+    }
+
+    public static final Creator<FilmAdapter> CREATOR = new Creator<FilmAdapter>() {
+        @Override
+        public FilmAdapter createFromParcel(Parcel in) {
+            return new FilmAdapter(in);
+        }
+
+        @Override
+        public FilmAdapter[] newArray(int size) {
+            return new FilmAdapter[size];
+        }
+    };
 
     @Override
     public FilmAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -42,8 +62,7 @@ public class FilmAdapter extends RecyclerView.Adapter<FilmAdapter.ViewHolder>  {
     public void onBindViewHolder(FilmAdapter.ViewHolder holder, int position) {
         ResultFilm resultFilm = list.get(position);
         holder.textNameFilm.setText(resultFilm.getTitle());
-        Picasso.with(context)
-                .load(resultFilm.getUrlPoster())
+        picasso.load(resultFilm.getUrlPoster())
                 .placeholder(R.drawable.ic_account_circle_black_24dp)
                 .fit()
                 .into(holder.imageView);
@@ -63,6 +82,17 @@ public class FilmAdapter extends RecyclerView.Adapter<FilmAdapter.ViewHolder>  {
         list.clear();
         notifyDataSetChanged();
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeTypedList(list);
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         ImageView imageView;

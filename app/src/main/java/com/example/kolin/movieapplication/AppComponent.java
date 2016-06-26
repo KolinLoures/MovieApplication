@@ -13,7 +13,7 @@ import com.example.kolin.movieapplication.presentation.favoriteFilms.FavoriteFil
 import com.example.kolin.movieapplication.presentation.favoriteFilms.PresenterFavoriteFilm;
 import com.example.kolin.movieapplication.presentation.films.PopularFilmFragment;
 import com.example.kolin.movieapplication.presentation.films.Presenter;
-import com.example.kolin.movieapplication.presentation.presentationModule.PresentationMod;
+import com.example.kolin.movieapplication.presentation.presentationModule.presentationMod;
 
 import javax.inject.Singleton;
 
@@ -32,7 +32,7 @@ import dagger.Component;
                 AppModule.class,
                 RepositoryModel.class,
                 InteractorModul.class,
-                PresentationMod.class
+                presentationMod.class
         })
 public interface AppComponent {
 

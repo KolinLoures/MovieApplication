@@ -1,5 +1,6 @@
 package com.example.kolin.movieapplication.presentation.favoriteFilms;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -64,7 +65,12 @@ public class FavoriteFilmFragment extends Fragment implements Contract.ViewFavor
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_favorite_film, container, false);
         RecyclerView recyclerView = (RecyclerView) v.findViewById(R.id.rvFavorite);
-        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
+        }
+        else {
+            recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+        }
         recyclerView.setAdapter(adapter);
         return v;
     }

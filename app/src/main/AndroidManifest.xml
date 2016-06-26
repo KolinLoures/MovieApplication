@@ -12,15 +12,13 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".presentation.MainActivity"
-            android:screenOrientation="portrait" >
+        <activity android:name=".presentation.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".presentation.DetailActivity"
-            android:screenOrientation="portrait"/>
+        <activity android:name=".presentation.DetailActivity"/>
     </application>
 
 </manifest>

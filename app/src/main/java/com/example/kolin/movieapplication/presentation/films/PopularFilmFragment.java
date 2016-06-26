@@ -1,6 +1,7 @@
 package com.example.kolin.movieapplication.presentation.films;
 
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -63,7 +64,12 @@ public class PopularFilmFragment extends Fragment implements Contract.View {
         View v =  inflater.inflate(R.layout.fragment_popular_film, container, false);
 
         RecyclerView recyclerView = (RecyclerView) v.findViewById(R.id.recycler_view);
-        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
+        }
+        else {
+            recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+        }
         recyclerView.setAdapter(adapter);
         return v;
     }
@@ -107,4 +113,5 @@ public class PopularFilmFragment extends Fragment implements Contract.View {
         super.onStop();
         presenter.detachView();
     }
+
 }
