@@ -41,8 +41,6 @@ public class FavoriteFilmFragment extends Fragment implements Contract.ViewFavor
 
         App.getComponent().inject(this);
 
-        presenter.attachView(this);
-
         listFavorite = new ArrayList<>();
         adapter = new FilmFavoriteAdapter(listFavorite, getContext(), presenter);
     }
@@ -63,6 +61,7 @@ public class FavoriteFilmFragment extends Fragment implements Contract.ViewFavor
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        presenter.attachView(this);
         View v = inflater.inflate(R.layout.fragment_favorite_film, container, false);
         RecyclerView recyclerView = (RecyclerView) v.findViewById(R.id.rvFavorite);
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
