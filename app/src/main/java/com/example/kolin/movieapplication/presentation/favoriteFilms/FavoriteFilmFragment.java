@@ -54,7 +54,6 @@ public class FavoriteFilmFragment extends Fragment implements Contract.ViewFavor
     @Override
     public void onStop() {
         super.onStart();
-        presenter.detachView();
     }
 
     @Override

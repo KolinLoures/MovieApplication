@@ -111,7 +111,6 @@ public class PopularFilmFragment extends Fragment implements Contract.View {
     @Override
     public void onStop() {
         super.onStop();
-        presenter.detachView();
     }
 
 }

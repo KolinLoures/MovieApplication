@@ -2,7 +2,6 @@ package com.example.kolin.movieapplication.presentation;
 
 import android.content.Context;
 
-import com.example.kolin.movieapplication.data.Repository;
 import com.example.kolin.movieapplication.domain.ResultFilm;
 
 import java.util.List;
@@ -30,12 +29,6 @@ public interface Contract {
 
         void attachView(Contract.View view);
 
-        void detachView();
-
-        boolean isViewAttached();
-
-        Contract.View getView();
-
     }
 
     interface PresenterFavoriteInterface{
@@ -45,12 +38,6 @@ public interface Contract {
         void removeFavoriteFilm(Context context, ResultFilm resultFilm);
 
         void attachView(Contract.ViewFavorite view);
-
-        void detachView();
-
-        boolean isViewAttached();
-
-        Contract.ViewFavorite getView();
 
     }
 }
