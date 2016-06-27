@@ -1,8 +1,11 @@
 package com.example.kolin.movieapplication.presentation.films;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,8 +18,10 @@ import com.example.kolin.movieapplication.App;
 import com.example.kolin.movieapplication.R;
 import com.example.kolin.movieapplication.domain.ResultFilm;
 import com.example.kolin.movieapplication.presentation.Contract;
+import com.example.kolin.movieapplication.presentation.DetailActivity;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -48,8 +53,31 @@ public class PopularFilmFragment extends Fragment implements Contract.View {
         presenter.attachView(this);
 
         resultFilms = new ArrayList<>();
-        adapter = new FilmAdapter(resultFilms, getContext(), presenter);
-        loadPreferences(sharedPreferences, "KEY");
+
+        adapter = new FilmAdapter(resultFilms, getContext());
+        adapter.setListener(new FilmAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View itemView, int position) {
+                switch (itemView.getId()){
+                    case R.id.favorite_button:
+                        Snackbar.make(getView(), "Added to favorite!", Snackbar.LENGTH_LONG).show();
+                        presenter.addToFavorite(resultFilms.get(position), getContext());
+                        break;
+                    default:
+                        Intent intent = new Intent(getContext(), DetailActivity.class);
+                        intent.putExtra("film", resultFilms.get(position));
+                        startActivity(intent);
+                        break;
+                }
+            }
+        });
+
+        if (savedInstanceState == null) {
+            loadPreferences(sharedPreferences, "KEY");
+        } else {
+            resultFilms.addAll((Collection<? extends ResultFilm>) savedInstanceState.get("List"));
+        }
+
         listenerPreference = new SharedPreferences.OnSharedPreferenceChangeListener() {
             @Override
             public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
@@ -94,6 +122,7 @@ public class PopularFilmFragment extends Fragment implements Contract.View {
         adapter.addAll(list);
     }
 
+
     public void loadPreferences(SharedPreferences sp, String key){
         if (key.equals("KEY")) {
             int selectedMenuItem = sp.getInt(key, 0);
@@ -111,6 +140,12 @@ public class PopularFilmFragment extends Fragment implements Contract.View {
     @Override
     public void onStop() {
         super.onStop();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelableArrayList("List", (ArrayList<? extends Parcelable>) presenter.getList());
     }
 
 }

@@ -8,6 +8,9 @@ import com.example.kolin.movieapplication.domain.Interactor;
 import com.example.kolin.movieapplication.domain.ResultFilm;
 import com.example.kolin.movieapplication.presentation.Contract;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.inject.Inject;
 
 import rx.Observable;
@@ -24,9 +27,13 @@ public class Presenter implements Contract.PresenterInterface {
 
     private Contract.View view;
 
+    private List<ResultFilm> listPopular;
+
+
 
     public Presenter() {
         App.getComponent().inject(this);
+        listPopular = new ArrayList<>();
     }
 
     @Override
@@ -38,7 +45,9 @@ public class Presenter implements Contract.PresenterInterface {
                     .subscribe(new Action1<Films>() {
                         @Override
                         public void call(Films films) {
-                            view.showFilms(films.getResults());
+                            listPopular.clear();
+                            listPopular.addAll(films.getResults());
+                            view.showFilms(listPopular);
                         }
                     });
     }
@@ -51,7 +60,9 @@ public class Presenter implements Contract.PresenterInterface {
                     .subscribe(new Action1<Films>() {
                         @Override
                         public void call(Films films) {
-                            view.showFilms(films.getResults());
+                            listPopular.clear();
+                            listPopular.addAll(films.getResults());
+                            view.showFilms(listPopular);
                         }
                     });
     }
@@ -65,6 +76,11 @@ public class Presenter implements Contract.PresenterInterface {
     @Override
     public void attachView(Contract.View view) {
         this.view = view;
+    }
+
+    @Override
+    public List<ResultFilm> getList() {
+        return listPopular;
     }
 
 

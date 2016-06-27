@@ -29,6 +29,8 @@ public interface Contract {
 
         void attachView(Contract.View view);
 
+        List<ResultFilm> getList();
+
     }
 
     interface PresenterFavoriteInterface{
