@@ -2,11 +2,11 @@ package com.example.kolin.movieapplication.presentation.films;
 
 import android.content.Context;
 
-import com.example.kolin.movieapplication.App;
 import com.example.kolin.movieapplication.domain.Films;
 import com.example.kolin.movieapplication.domain.Interactor;
 import com.example.kolin.movieapplication.domain.ResultFilm;
 import com.example.kolin.movieapplication.presentation.Contract;
+import com.example.kolin.movieapplication.presentation.di.PerActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,22 +17,21 @@ import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
-
+@PerActivity
 public class Presenter implements Contract.PresenterInterface {
 
 
-    @Inject
+
     Interactor interactor;
 
 
     private Contract.View view;
-
     private List<ResultFilm> listPopular;
 
 
-
-    public Presenter() {
-        App.getComponent().inject(this);
+    @Inject
+    public Presenter(Interactor interactor) {
+        this.interactor = interactor;
         listPopular = new ArrayList<>();
     }
 

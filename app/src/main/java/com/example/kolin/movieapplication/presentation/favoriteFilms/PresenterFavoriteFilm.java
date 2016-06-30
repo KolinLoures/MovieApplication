@@ -2,10 +2,10 @@ package com.example.kolin.movieapplication.presentation.favoriteFilms;
 
 import android.content.Context;
 
-import com.example.kolin.movieapplication.App;
 import com.example.kolin.movieapplication.domain.Interactor;
 import com.example.kolin.movieapplication.domain.ResultFilm;
 import com.example.kolin.movieapplication.presentation.Contract;
+import com.example.kolin.movieapplication.presentation.di.PerActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,15 +19,17 @@ import rx.functions.Action1;
 /**
  * Created by n.kirilov on 17.06.2016.
  */
+@PerActivity
 public class PresenterFavoriteFilm implements Contract.PresenterFavoriteInterface {
 
-    @Inject
+
     Interactor interactor;
 
     private Contract.ViewFavorite view;
 
-    public PresenterFavoriteFilm() {
-        App.getComponent().inject(this);
+    @Inject
+    public PresenterFavoriteFilm(Interactor interactor) {
+        this.interactor = interactor;
     }
 
     @Override

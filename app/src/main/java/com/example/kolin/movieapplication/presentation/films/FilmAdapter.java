@@ -1,7 +1,6 @@
 package com.example.kolin.movieapplication.presentation.films;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.v7.widget.RecyclerView;
@@ -14,7 +13,6 @@ import android.widget.TextView;
 
 import com.example.kolin.movieapplication.R;
 import com.example.kolin.movieapplication.domain.ResultFilm;
-import com.example.kolin.movieapplication.presentation.DetailActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -22,12 +20,10 @@ import java.util.List;
 public class FilmAdapter extends RecyclerView.Adapter<FilmAdapter.ViewHolder> implements Parcelable {
     private List<ResultFilm> list;
     private Context context;
-    private Picasso picasso;
 
     private static OnItemClickListener listener;
 
     public FilmAdapter(List<ResultFilm> list, Context context) {
-        picasso = Picasso.with(context);
         this.list = list;
         this.context = context;
     }
@@ -69,7 +65,7 @@ public class FilmAdapter extends RecyclerView.Adapter<FilmAdapter.ViewHolder> im
     public void onBindViewHolder(FilmAdapter.ViewHolder holder, int position) {
         ResultFilm resultFilm = list.get(position);
         holder.textNameFilm.setText(resultFilm.getTitle());
-        picasso.load(resultFilm.getUrlPoster())
+        Picasso.with(context).load(resultFilm.getUrlPoster())
                 .placeholder(R.drawable.ic_account_circle_black_24dp)
                 .fit()
                 .into(holder.imageView);
@@ -127,12 +123,5 @@ public class FilmAdapter extends RecyclerView.Adapter<FilmAdapter.ViewHolder> im
             favoriteBtn.setOnClickListener(onClickListener);
         }
 
-
-
-        private void startDetailActivity (Context context){
-            Intent intent = new Intent(context, DetailActivity.class);
-            intent.putExtra("film", list.get(getAdapterPosition()));
-            context.startActivity(intent);
-        }
     }
 }

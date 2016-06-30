@@ -1,6 +1,7 @@
 package com.example.kolin.movieapplication.presentation;
 
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -8,7 +9,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -16,6 +16,12 @@ import android.view.MenuItem;
 
 import com.example.kolin.movieapplication.App;
 import com.example.kolin.movieapplication.R;
+import com.example.kolin.movieapplication.presentation.di.HasComponent;
+import com.example.kolin.movieapplication.presentation.di.components.AppComponent;
+import com.example.kolin.movieapplication.presentation.di.components.DaggerFilmComponent;
+import com.example.kolin.movieapplication.presentation.di.components.FilmComponent;
+import com.example.kolin.movieapplication.presentation.di.modules.ActivityModule;
+import com.example.kolin.movieapplication.presentation.di.modules.FilmModule;
 import com.example.kolin.movieapplication.presentation.favoriteFilms.FavoriteFilmFragment;
 import com.example.kolin.movieapplication.presentation.films.PopularFilmFragment;
 
@@ -24,15 +30,14 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements HasComponent<FilmComponent> {
 
 
     @Inject
     SharedPreferences sharedPreferences;
-    @Inject
-    PopularFilmFragment popularFilmFragment;
-    @Inject
-    FavoriteFilmFragment favoriteFilmFragment;
+
+
+    private FilmComponent filmComponent;
 
 
     private Adapter adapter;
@@ -43,8 +48,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        initializeInjector();
 
-        App.getComponent().inject(this);
+        this.getAppComponent().inject(this);
 
 
         viewPager = (ViewPager) findViewById(R.id.viewP);
@@ -61,7 +67,6 @@ public class MainActivity extends AppCompatActivity {
 
         TabLayout tabs = (TabLayout) findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
-
     }
 
     @Override
@@ -104,14 +109,24 @@ public class MainActivity extends AppCompatActivity {
 
     public void setupAdapter(){
         adapter = new Adapter(getSupportFragmentManager());
-        adapter.addFragment(popularFilmFragment, "Films");
-        adapter.addFragment(favoriteFilmFragment, "Favorite");
+        adapter.addFragment(new PopularFilmFragment(), "Films");
+        adapter.addFragment(new FavoriteFilmFragment(), "Favorite");
         viewPager.setAdapter(adapter);
     }
 
+    private void initializeInjector(){
+        this.filmComponent = DaggerFilmComponent.builder()
+                .appComponent(getAppComponent())
+                .activityModule(getActivityModule())
+                .filmModule(new FilmModule())
+                .build();
+    }
 
-
-
+    @Override
+    public FilmComponent getComponent() {
+        initializeInjector();
+        return filmComponent;
+    }
 
 
     public static class Adapter extends FragmentPagerAdapter {
@@ -143,6 +158,14 @@ public class MainActivity extends AppCompatActivity {
             return fragmentTitleList.get(position);
         }
 
+    }
+
+    public AppComponent getAppComponent(){
+        return ((App)getApplication()).getAppComponent();
+    }
+
+    public ActivityModule getActivityModule(){
+        return new ActivityModule(this);
     }
 
 

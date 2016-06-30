@@ -2,7 +2,6 @@ package com.example.kolin.movieapplication.data;
 
 import android.content.Context;
 
-import com.example.kolin.movieapplication.App;
 import com.example.kolin.movieapplication.domain.Films;
 import com.example.kolin.movieapplication.domain.IRepository;
 import com.example.kolin.movieapplication.domain.ResultFilm;
@@ -10,8 +9,6 @@ import com.example.kolin.movieapplication.domain.ResultFilm;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import dagger.Module;
-import dagger.Provides;
 import io.realm.Realm;
 import io.realm.RealmQuery;
 import rx.Observable;
@@ -19,21 +16,20 @@ import rx.Observable;
 /**
  * Created by kolin on 07.06.2016.
  */
-
+@Singleton
 public class Repository implements IRepository {
 
     private static final String API_KEY = "f9d35cafe47dc95f1389ae4b3c80b09d";
     private static final String SORT_BY_POPULARITY = "popularity.desc";
     private static final String SORT_BY_DATE = "release_date.desc";
 
-    @Inject
     Realm realm;
-    @Inject
     ApiInterface api;
 
-
-    public Repository() {
-        App.getComponent().inject(this);
+    @Inject
+    public Repository(ApiInterface api, Realm realm) {
+        this.api = api;
+        this.realm = realm;
     }
 
     @Override

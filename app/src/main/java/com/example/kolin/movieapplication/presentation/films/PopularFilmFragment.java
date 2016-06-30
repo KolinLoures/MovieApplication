@@ -4,9 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -14,20 +12,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.kolin.movieapplication.App;
 import com.example.kolin.movieapplication.R;
 import com.example.kolin.movieapplication.domain.ResultFilm;
+import com.example.kolin.movieapplication.presentation.BaseFragment;
 import com.example.kolin.movieapplication.presentation.Contract;
 import com.example.kolin.movieapplication.presentation.DetailActivity;
+import com.example.kolin.movieapplication.presentation.di.components.FilmComponent;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import javax.inject.Inject;
 
 
-public class PopularFilmFragment extends Fragment implements Contract.View {
+public class PopularFilmFragment extends BaseFragment implements Contract.View {
 
     private List<ResultFilm> resultFilms;
     private FilmAdapter adapter;
@@ -48,13 +46,13 @@ public class PopularFilmFragment extends Fragment implements Contract.View {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        App.getComponent().inject(this);
+        this.getComponent(FilmComponent.class).inject(this);
 
         presenter.attachView(this);
 
         resultFilms = new ArrayList<>();
 
-        adapter = new FilmAdapter(resultFilms, getContext());
+
         adapter.setListener(new FilmAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View itemView, int position) {
@@ -72,11 +70,7 @@ public class PopularFilmFragment extends Fragment implements Contract.View {
             }
         });
 
-        if (savedInstanceState == null) {
-            loadPreferences(sharedPreferences, "KEY");
-        } else {
-            resultFilms.addAll((Collection<? extends ResultFilm>) savedInstanceState.get("List"));
-        }
+        loadPreferences(sharedPreferences, "KEY");
 
         listenerPreference = new SharedPreferences.OnSharedPreferenceChangeListener() {
             @Override
@@ -84,6 +78,7 @@ public class PopularFilmFragment extends Fragment implements Contract.View {
                 loadPreferences(sharedPreferences, key);
             }
         };
+        adapter = new FilmAdapter(resultFilms,getContext());
     }
 
     @Override
@@ -137,15 +132,7 @@ public class PopularFilmFragment extends Fragment implements Contract.View {
         }
     }
 
-    @Override
-    public void onStop() {
-        super.onStop();
-    }
 
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putParcelableArrayList("List", (ArrayList<? extends Parcelable>) presenter.getList());
-    }
+
 
 }
