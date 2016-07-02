@@ -169,6 +169,7 @@ public class ResultFilm extends RealmObject implements Parcelable {
         return vote_average;
     }
 
+
     public void setVote_average(Double vote_average) {
         this.vote_average = vote_average;
     }
