@@ -174,7 +174,7 @@ public class ResultFilm extends RealmObject implements Parcelable {
     }
 
     public String getUrlPoster() {
-        urlPoster = "http://image.tmdb.org/t/p/w500/"+ poster_path;
+        urlPoster = "http://image.tmdb.org/t/p/w185/"+ poster_path;
         return urlPoster;
     }
 

@@ -1,8 +1,6 @@
 package com.example.kolin.movieapplication.presentation.favoriteFilms;
 
 import android.content.Context;
-import android.content.Intent;
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,9 +12,9 @@ import android.widget.TextView;
 import com.example.kolin.movieapplication.R;
 import com.example.kolin.movieapplication.domain.ResultFilm;
 import com.example.kolin.movieapplication.presentation.Contract;
-import com.example.kolin.movieapplication.presentation.DetailActivity;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,11 +25,20 @@ public class FilmFavoriteAdapter extends RecyclerView.Adapter<FilmFavoriteAdapte
     private List<ResultFilm> list;
     private Context context;
     private Contract.PresenterFavoriteInterface presenter;
+    private static OnClickItemDeleteFromDbListener listener;
 
-    public FilmFavoriteAdapter(List<ResultFilm> list, Context context, Contract.PresenterFavoriteInterface presenter) {
-        this.list = list;
+    public FilmFavoriteAdapter(Context context, Contract.PresenterFavoriteInterface presenter) {
+        this.list = new ArrayList<>();
         this.context = context;
         this.presenter = presenter;
+    }
+
+    public interface OnClickItemDeleteFromDbListener{
+        void onClickDelete(View v, int position);
+    }
+
+    public void setListener(OnClickItemDeleteFromDbListener listener){
+        FilmFavoriteAdapter.listener = listener;
     }
 
     @Override
@@ -68,8 +75,12 @@ public class FilmFavoriteAdapter extends RecyclerView.Adapter<FilmFavoriteAdapte
 
     }
 
+    public ResultFilm getItem(int position){
+        return list.get(position);
+    }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
         ImageView imageView;
         TextView textNameFilm;
@@ -85,31 +96,20 @@ public class FilmFavoriteAdapter extends RecyclerView.Adapter<FilmFavoriteAdapte
 
             deleteBtn.setImageResource(R.drawable.ic_clear_black_24dp);
 
-            imageView.setOnClickListener(this);
-            textNameFilm.setOnClickListener(this);
-            deleteBtn.setOnClickListener(this);
+            View.OnClickListener onClickListener = new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener!=null){
+                        listener.onClickDelete(v, getLayoutPosition());
+                    }
+                }
+            };
+
+            itemView.setOnClickListener(onClickListener);
+            deleteBtn.setOnClickListener(onClickListener);
         }
 
-        @Override
-        public void onClick(View v) {
-            switch (v.getId()) {
-                case R.id.poster:
-                    startDetailActivity(v.getContext());
-                    break;
-                case R.id.film_title:
-                    startDetailActivity(v.getContext());
-                    break;
-                case R.id.favorite_button:
-                    Snackbar.make(v, "Deleted from favorite!", Snackbar.LENGTH_LONG).show();
-                    presenter.removeFavoriteFilm(v.getContext(), list.get(getAdapterPosition()));
-                    break;
-            }
-        }
 
-        private void startDetailActivity (Context context){
-            Intent intent = new Intent(context, DetailActivity.class);
-            intent.putExtra("film", list.get(getAdapterPosition()));
-            context.startActivity(intent);
-        }
+
     }
 }

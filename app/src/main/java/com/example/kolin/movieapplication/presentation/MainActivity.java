@@ -52,7 +52,6 @@ public class MainActivity extends AppCompatActivity implements HasComponent<Film
 
         this.getAppComponent().inject(this);
 
-
         viewPager = (ViewPager) findViewById(R.id.viewP);
 
         setupAdapter();

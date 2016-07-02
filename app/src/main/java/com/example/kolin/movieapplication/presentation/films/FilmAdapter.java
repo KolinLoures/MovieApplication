@@ -1,8 +1,6 @@
 package com.example.kolin.movieapplication.presentation.films;
 
 import android.content.Context;
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +16,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FilmAdapter extends RecyclerView.Adapter<FilmAdapter.ViewHolder> implements Parcelable {
+public class FilmAdapter extends RecyclerView.Adapter<FilmAdapter.ViewHolder> {
     private List<ResultFilm> list;
     private Context context;
 
@@ -39,21 +37,7 @@ public class FilmAdapter extends RecyclerView.Adapter<FilmAdapter.ViewHolder> im
         FilmAdapter.listener = listener;
     }
 
-    protected FilmAdapter(Parcel in) {
-        list = in.createTypedArrayList(ResultFilm.CREATOR);
-    }
 
-    public static final Creator<FilmAdapter> CREATOR = new Creator<FilmAdapter>() {
-        @Override
-        public FilmAdapter createFromParcel(Parcel in) {
-            return new FilmAdapter(in);
-        }
-
-        @Override
-        public FilmAdapter[] newArray(int size) {
-            return new FilmAdapter[size];
-        }
-    };
 
     @Override
     public FilmAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -93,16 +77,6 @@ public class FilmAdapter extends RecyclerView.Adapter<FilmAdapter.ViewHolder> im
 
     public List<ResultFilm> getList() {
         return list;
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeTypedList(list);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{

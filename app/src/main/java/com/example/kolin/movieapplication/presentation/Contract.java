@@ -13,10 +13,16 @@ public interface Contract {
 
     interface View{
         void showFilms(List<ResultFilm> list);
+
+        void setAdapterListener();
+
+        void setSharedPreferencesListener();
     }
 
     interface ViewFavorite{
         void showFavoriteFilms(List<ResultFilm> list);
+
+        void setAdapterListener();
     }
 
     interface PresenterInterface{

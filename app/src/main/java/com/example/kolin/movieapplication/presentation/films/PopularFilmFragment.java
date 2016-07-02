@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -29,7 +30,6 @@ import javax.inject.Inject;
 public class PopularFilmFragment extends BaseFragment implements Contract.View {
 
     private FilmAdapter adapter;
-
     private SharedPreferences.OnSharedPreferenceChangeListener listenerPreference;
 
     @Inject
@@ -51,37 +51,11 @@ public class PopularFilmFragment extends BaseFragment implements Contract.View {
         presenter.attachView(this);
         adapter = new FilmAdapter(getContext());
 
-
-        adapter.setListener(new FilmAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View itemView, int position) {
-                switch (itemView.getId()){
-                    case R.id.favorite_button:
-                        Snackbar.make(getView(), "Added to favorite!", Snackbar.LENGTH_LONG).show();
-                        presenter.addToFavorite(adapter.getItem(position), getContext());
-                        break;
-                    default:
-                        Intent intent = new Intent(getContext(), DetailActivity.class);
-                        intent.putExtra("film", adapter.getItem(position));
-                        startActivity(intent);
-                        break;
-                }
-            }
-        });
-
-        if (savedInstanceState == null) {
-            loadPreferences(sharedPreferences, "KEY");
-        } else {
-            showFilms((List<ResultFilm>) savedInstanceState.get("list"));
-        }
-
-        listenerPreference = new SharedPreferences.OnSharedPreferenceChangeListener() {
-            @Override
-            public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-                loadPreferences(sharedPreferences, key);
-            }
-        };
+        setAdapterListener();
+        setSharedPreferencesListener();
     }
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -119,6 +93,36 @@ public class PopularFilmFragment extends BaseFragment implements Contract.View {
         adapter.addAll(list);
     }
 
+    @Override
+    public void setAdapterListener() {
+        adapter.setListener(new FilmAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View itemView, int position) {
+                switch (itemView.getId()){
+                    case R.id.favorite_button:
+                        Snackbar.make(getView(), "Added to favorite!", Snackbar.LENGTH_LONG).show();
+                        presenter.addToFavorite(adapter.getItem(position), getContext());
+                        break;
+                    default:
+                        Intent intent = new Intent(getContext(), DetailActivity.class);
+                        intent.putExtra("film", adapter.getItem(position));
+                        startActivity(intent);
+                        break;
+                }
+            }
+        });
+    }
+
+    @Override
+    public void setSharedPreferencesListener() {
+        listenerPreference = new SharedPreferences.OnSharedPreferenceChangeListener() {
+            @Override
+            public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+                loadPreferences(sharedPreferences, key);
+            }
+        };
+    }
+
 
     public void loadPreferences(SharedPreferences sp, String key){
         if (key.equals("KEY")) {
@@ -138,5 +142,15 @@ public class PopularFilmFragment extends BaseFragment implements Contract.View {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putParcelableArrayList("list", (ArrayList<? extends Parcelable>) adapter.getList());
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        if (savedInstanceState == null) {
+            loadPreferences(sharedPreferences, "KEY");
+        } else {
+            showFilms((List<ResultFilm>) savedInstanceState.get("list"));
+        }
     }
 }
