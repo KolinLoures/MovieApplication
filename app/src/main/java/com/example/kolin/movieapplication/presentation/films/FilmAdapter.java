@@ -15,6 +15,7 @@ import com.example.kolin.movieapplication.R;
 import com.example.kolin.movieapplication.domain.ResultFilm;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FilmAdapter extends RecyclerView.Adapter<FilmAdapter.ViewHolder> implements Parcelable {
@@ -23,8 +24,8 @@ public class FilmAdapter extends RecyclerView.Adapter<FilmAdapter.ViewHolder> im
 
     private static OnItemClickListener listener;
 
-    public FilmAdapter(List<ResultFilm> list, Context context) {
-        this.list = list;
+    public FilmAdapter(Context context) {
+        this.list = new ArrayList<>();
         this.context = context;
     }
 
@@ -84,6 +85,14 @@ public class FilmAdapter extends RecyclerView.Adapter<FilmAdapter.ViewHolder> im
     public void clear() {
         list.clear();
         notifyDataSetChanged();
+    }
+
+    public ResultFilm getItem(int position){
+        return list.get(position);
+    }
+
+    public List<ResultFilm> getList() {
+        return list;
     }
 
     @Override

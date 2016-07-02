@@ -6,7 +6,6 @@ import com.example.kolin.movieapplication.domain.Films;
 import com.example.kolin.movieapplication.domain.Interactor;
 import com.example.kolin.movieapplication.domain.ResultFilm;
 import com.example.kolin.movieapplication.presentation.Contract;
-import com.example.kolin.movieapplication.presentation.di.PerActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +16,7 @@ import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
-@PerActivity
+
 public class Presenter implements Contract.PresenterInterface {
 
 

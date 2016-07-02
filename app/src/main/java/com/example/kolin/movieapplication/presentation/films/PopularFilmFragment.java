@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -27,7 +28,6 @@ import javax.inject.Inject;
 
 public class PopularFilmFragment extends BaseFragment implements Contract.View {
 
-    private List<ResultFilm> resultFilms;
     private FilmAdapter adapter;
 
     private SharedPreferences.OnSharedPreferenceChangeListener listenerPreference;
@@ -49,8 +49,7 @@ public class PopularFilmFragment extends BaseFragment implements Contract.View {
         this.getComponent(FilmComponent.class).inject(this);
 
         presenter.attachView(this);
-
-        resultFilms = new ArrayList<>();
+        adapter = new FilmAdapter(getContext());
 
 
         adapter.setListener(new FilmAdapter.OnItemClickListener() {
@@ -59,18 +58,22 @@ public class PopularFilmFragment extends BaseFragment implements Contract.View {
                 switch (itemView.getId()){
                     case R.id.favorite_button:
                         Snackbar.make(getView(), "Added to favorite!", Snackbar.LENGTH_LONG).show();
-                        presenter.addToFavorite(resultFilms.get(position), getContext());
+                        presenter.addToFavorite(adapter.getItem(position), getContext());
                         break;
                     default:
                         Intent intent = new Intent(getContext(), DetailActivity.class);
-                        intent.putExtra("film", resultFilms.get(position));
+                        intent.putExtra("film", adapter.getItem(position));
                         startActivity(intent);
                         break;
                 }
             }
         });
 
-        loadPreferences(sharedPreferences, "KEY");
+        if (savedInstanceState == null) {
+            loadPreferences(sharedPreferences, "KEY");
+        } else {
+            showFilms((List<ResultFilm>) savedInstanceState.get("list"));
+        }
 
         listenerPreference = new SharedPreferences.OnSharedPreferenceChangeListener() {
             @Override
@@ -78,7 +81,6 @@ public class PopularFilmFragment extends BaseFragment implements Contract.View {
                 loadPreferences(sharedPreferences, key);
             }
         };
-        adapter = new FilmAdapter(resultFilms,getContext());
     }
 
     @Override
@@ -132,7 +134,9 @@ public class PopularFilmFragment extends BaseFragment implements Contract.View {
         }
     }
 
-
-
-
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelableArrayList("list", (ArrayList<? extends Parcelable>) adapter.getList());
+    }
 }
