@@ -52,8 +52,8 @@ public class Presenter implements Contract.PresenterInterface {
 
     @Override
     public void showAllDateFilms() {
-            Observable<Films> observable = interactor.showAllDateFilms();
-            observable.subscribeOn(Schedulers.newThread())
+             interactor.showAllDateFilms()
+                    .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Action1<Films>() {
                         @Override
@@ -61,6 +61,11 @@ public class Presenter implements Contract.PresenterInterface {
                             listPopular.clear();
                             listPopular.addAll(films.getResults());
                             view.showFilms(listPopular);
+                        }
+                    }, new Action1<Throwable>() {
+                        @Override
+                        public void call(Throwable throwable) {
+                            throwable.printStackTrace();
                         }
                     });
     }
